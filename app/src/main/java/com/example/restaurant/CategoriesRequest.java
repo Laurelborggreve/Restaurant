@@ -17,8 +17,9 @@ import java.util.ArrayList;
 public class CategoriesRequest implements Response.Listener<JSONObject>, Response.ErrorListener {
     private Context context;
     private Callback activity;
-    private ArrayList<String> list_categories;
+    private ArrayList<String> list_categories = new ArrayList<>();
     private JSONArray array_categories;
+
 
 
     public interface Callback {
@@ -26,8 +27,8 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         void gotCategoriesError(String message);
     }
 
-    public CategoriesRequest(Context cont) {
-        context = cont;
+    public CategoriesRequest(Context c) {
+        context = c;
     }
 
     public void getCategories(Callback activity) {
@@ -46,7 +47,7 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
     @Override
     public void onResponse(JSONObject response) {
         try {
-            list_categories = new ArrayList<>();
+            //  list_categories = new ArrayList<>();
             array_categories = response.getJSONArray("categories");
             for (int i = 0; i < array_categories.length(); i++) {
                 list_categories.add(array_categories.getString(i));

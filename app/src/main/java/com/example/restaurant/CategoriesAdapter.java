@@ -12,7 +12,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesAdapter extends ArrayAdapter {
+public class CategoriesAdapter extends ArrayAdapter<String> {
     private ArrayList<String> adapter_categories;
 
     public CategoriesAdapter(Context context, int resource, ArrayList<String> objects) {
@@ -28,9 +28,10 @@ public class CategoriesAdapter extends ArrayAdapter {
         }
 
         // Get access to layout's views
-        String category = adapter_categories.get(position);
+        // String category = adapter_categories.get(position);
         TextView view_category = convertView.findViewById(R.id.view_category);
-        view_category.setText(category);
+      //  view_category.setText(category);
+         view_category.setText(adapter_categories.get(position));
 
         return convertView;
     }

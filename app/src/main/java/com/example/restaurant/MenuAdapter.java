@@ -27,12 +27,13 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         }
 
         // Get access to layout's views
-        MenuItem MenuItem = adapter_menuitems.get(position);
+     //   MenuItem MenuItem = adapter_menuitems.get(position);
         TextView view_menu_name = convertView.findViewById(R.id.view_menu_name);
-        view_menu_name.setText(MenuItem.getName());
+        view_menu_name.setText(adapter_menuitems.get(position).getName());
 
         TextView view_menu_price = convertView.findViewById(R.id.view_menu_price);
-        view_menu_price.setText("\u20ac" + Integer.toString(MenuItem.getPrice()));
+     //   view_menu_price.setText("\u20ac" + Integer.toString(MenuItem.getPrice()));
+        view_menu_price.setText("€" + adapter_menuitems.get(position).getPrice());
 
         ImageView view_menu_image = convertView.findViewById(R.id.view_menu_image);
 

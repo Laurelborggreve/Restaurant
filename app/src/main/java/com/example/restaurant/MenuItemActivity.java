@@ -28,8 +28,9 @@ public class MenuItemActivity extends AppCompatActivity {
         detail_description.setText(menuitem.getDescription());
 
         TextView detail_price = findViewById(R.id.detail_price);
-        String price = "\u20BF" + Integer.toString(menuitem.getPrice());
-        detail_price.setText(price);
+      //  String price = "\u20BF" + Integer.toString(menuitem.getPrice());
+        detail_price.setText("€" + menuitem.getPrice());
+      //  detail_price.setText(price);
 
         ImageView detail_image = findViewById(R.id.detail_image);
       //  Picasso.with(getApplicationContext()).load(menuitem.getImageUrl()).into(detail_image);

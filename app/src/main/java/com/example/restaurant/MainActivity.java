@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CategoriesRequest.Callback {
-    private CategoriesAdapter adapter;
+  //  private CategoriesAdapter adapter;
+  private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements CategoriesRequest
 
     @Override
     public void gotCategories(ArrayList<String> categories) {
-        adapter = new CategoriesAdapter(this, R.layout.adapter_category, categories);
+        adapter = new CategoriesAdapter(this, R.layout.activity_main, categories);
         ListView listview = findViewById(R.id.menuitems);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new ItemClickListener());
@@ -39,9 +40,10 @@ public class MainActivity extends AppCompatActivity implements CategoriesRequest
     private class ItemClickListener implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            String category = (String) parent.getItemAtPosition(position);
+         //   String ClickedCategory = (String) parent.getItemAtPosition(position); geswitcht van level
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-            intent.putExtra("category", category);
+            String ClickedCategory = (String) parent.getItemAtPosition(position);
+            intent.putExtra("category", ClickedCategory);
             startActivity(intent);
         }
     }

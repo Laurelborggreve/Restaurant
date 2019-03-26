@@ -5,32 +5,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements MenuRequest.Callback {
+    // nieuw
+ //   private ListAdapter adapter_menu;
+    private ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
         // Retrieve category string
         Intent intent = getIntent();
-        String category = intent.getStringExtra("category");
+        String category = (String) intent.getSerializableExtra("category");
 
         // Ensure string is part of the request for menu items
-        MenuRequest menurequest = new MenuRequest(this);
-        menurequest.getMenuItems(this, category);
+        MenuRequest menurequest = new MenuRequest(this, category);
+        menurequest.getMenuItems(this);
     }
 
     @Override
-    public void gotMenuItems(ArrayList<MenuItem> MenuItems) {
-        MenuAdapter adapter_menu = new MenuAdapter(this, R.layout.adapter_category, MenuItems);
+    public void gotMenuItems(ArrayList<MenuItem>MenuItems) {
+     //   MenuAdapter adapter_menu = new MenuAdapter(this, R.layout.adapter_category, MenuItems);
+        adapter = new MenuAdapter(this, R.layout.activity_menu, MenuItems);
         ListView listview = findViewById(R.id.menuitems);
-        listview.setAdapter(adapter_menu);
+        listview.setAdapter(adapter);
         listview.setOnItemClickListener(new MenuItemClickListener());
     }
 
@@ -44,8 +49,8 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(MenuActivity.this, MenuItemActivity.class);
-            MenuItem MenuItem = (MenuItem) parent.getItemAtPosition(position);
-            intent.putExtra("item", MenuItem);
+            MenuItem ClickedMenuItem = (MenuItem) parent.getItemAtPosition(position);
+            intent.putExtra("item", ClickedMenuItem);
             startActivity(intent);
         }
 
