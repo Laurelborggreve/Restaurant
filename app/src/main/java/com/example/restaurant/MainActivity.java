@@ -13,23 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CategoriesRequest.Callback {
-  //  private CategoriesAdapter adapter;
-  private ListAdapter adapter;
+    private CategoriesAdapter adapter;
 
+    // Method to start the request for categories
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
+
         CategoriesRequest categoriesrequest = new CategoriesRequest(this);
         categoriesrequest.getCategories(this);
     }
 
+    // Method to set adapter
     @Override
     public void gotCategories(ArrayList<String> categories) {
-        adapter = new CategoriesAdapter(this, R.layout.activity_main, categories);
-        ListView listview = findViewById(R.id.menuitems);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new ItemClickListener());
+        adapter = new CategoriesAdapter(this, R.layout.adapter_category, categories);
+        ListView menuItems = findViewById(R.id.menu_items);
+        menuItems.setAdapter(adapter);
+        menuItems.setOnItemClickListener(new ItemClickListener());
     }
 
     @Override
@@ -37,10 +39,10 @@ public class MainActivity extends AppCompatActivity implements CategoriesRequest
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    // Method to show dishes from a category once it is clicked
     private class ItemClickListener implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-         //   String ClickedCategory = (String) parent.getItemAtPosition(position); geswitcht van level
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
             String ClickedCategory = (String) parent.getItemAtPosition(position);
             intent.putExtra("category", ClickedCategory);

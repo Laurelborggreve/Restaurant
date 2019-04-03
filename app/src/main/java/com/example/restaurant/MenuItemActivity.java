@@ -9,32 +9,30 @@ import android.widget.TextView;
 // import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 public class MenuItemActivity extends AppCompatActivity {
 
+    // Method to show the details (name, image, description and price) of the clicked dish
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_item);
 
         Intent intent = getIntent();
-        MenuItem menuitem = (MenuItem) intent.getSerializableExtra("item");
-        setTitle(menuitem.getName());
+        MenuItem retrievedMenuItem = (MenuItem) intent.getSerializableExtra("item");
+        setTitle(retrievedMenuItem.getName());
 
-        TextView detail_name  = findViewById(R.id.detail_name);
-        detail_name.setText(menuitem.getName());
+        TextView detailName  = findViewById(R.id.detail_name);
+        detailName.setText(retrievedMenuItem.getName());
 
-        TextView detail_description = findViewById(R.id.detail_description);
-        detail_description.setText(menuitem.getDescription());
+        ImageView detailImage = findViewById(R.id.detail_image);
+        Picasso.get().load(retrievedMenuItem.getImageUrl()).into(detailImage);
 
-        TextView detail_price = findViewById(R.id.detail_price);
-      //  String price = "\u20BF" + Integer.toString(menuitem.getPrice());
-        detail_price.setText("€" + menuitem.getPrice());
-      //  detail_price.setText(price);
+        TextView detailDescription = findViewById(R.id.detail_description);
+        detailDescription.setText(retrievedMenuItem.getDescription());
 
-        ImageView detail_image = findViewById(R.id.detail_image);
-      //  Picasso.with(getApplicationContext()).load(menuitem.getImageUrl()).into(detail_image);
-
-
+        TextView detailPrice = findViewById(R.id.detail_price);
+        detailPrice.setText("€" + retrievedMenuItem.getPrice());
     }
 }

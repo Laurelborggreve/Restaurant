@@ -12,9 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity implements MenuRequest.Callback {
-    // nieuw
- //   private ListAdapter adapter_menu;
-    private ListAdapter adapter;
+    private MenuAdapter adapterMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +24,20 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
         String category = (String) intent.getSerializableExtra("category");
 
         // Ensure string is part of the request for menu items
-        MenuRequest menurequest = new MenuRequest(this, category);
-        menurequest.getMenuItems(this);
+        MenuRequest menuRequest = new MenuRequest(this);
+        menuRequest.getMenuItems(this, category);
     }
 
+    // Method to set adapter
     @Override
     public void gotMenuItems(ArrayList<MenuItem>MenuItems) {
-     //   MenuAdapter adapter_menu = new MenuAdapter(this, R.layout.adapter_category, MenuItems);
-        adapter = new MenuAdapter(this, R.layout.activity_menu, MenuItems);
-        ListView listview = findViewById(R.id.menuitems);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new MenuItemClickListener());
+        adapterMenu = new MenuAdapter(this, R.layout.adapter_category, MenuItems);
+        ListView menuItems = findViewById(R.id.menu_items);
+        menuItems.setAdapter(adapterMenu);
+        menuItems.setOnItemClickListener(new MenuItemClickListener());
     }
 
+    // Method that is called when something goes wrong
     @Override
     public void gotMenuItemsError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
@@ -53,6 +52,5 @@ public class MenuActivity extends AppCompatActivity implements MenuRequest.Callb
             intent.putExtra("item", ClickedMenuItem);
             startActivity(intent);
         }
-
     }
 }

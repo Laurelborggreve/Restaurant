@@ -33,27 +33,7 @@ public class MenuItem implements Serializable {
         return price;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 }

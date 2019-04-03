@@ -12,12 +12,12 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoriesAdapter extends ArrayAdapter<String> {
-    private ArrayList<String> adapter_categories;
+public class CategoriesAdapter extends ArrayAdapter {
+    private ArrayList<String> adapterCategories;
 
     public CategoriesAdapter(Context context, int resource, ArrayList<String> objects) {
         super(context, resource, objects);
-        adapter_categories = objects;
+        adapterCategories = objects;
     }
 
     // Method to load the layout for each grid item
@@ -28,10 +28,8 @@ public class CategoriesAdapter extends ArrayAdapter<String> {
         }
 
         // Get access to layout's views
-        // String category = adapter_categories.get(position);
-        TextView view_category = convertView.findViewById(R.id.view_category);
-      //  view_category.setText(category);
-         view_category.setText(adapter_categories.get(position));
+        TextView viewCategory = convertView.findViewById(R.id.view_category);
+        viewCategory.setText(adapterCategories.get(position));
 
         return convertView;
     }

@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
         android:fontFamily="cursive"
+        android:paddingBottom="30dp"
         android:text="Welcome to Laurel's Restaurant! \n This is our menu. \n Enjoy!"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
@@ -22,7 +22,7 @@
     <ListView
         android:id="@+id/menu_items"
         android:layout_width="match_parent"
-        android:layout_height="682dp" />
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

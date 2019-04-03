@@ -1,6 +1,7 @@
 package com.example.restaurant;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,68 +17,58 @@ import java.util.ArrayList;
 
 public class MenuRequest implements Response.Listener<JSONObject>, Response.ErrorListener {
     private Context context;
-   // private Callback activity_menu;
-   private MenuRequest.Callback activity;
-    private ArrayList<MenuItem> list_menuitems;
-    private JSONArray array_menuitems;
-    private String category;
+    private Callback activity;
+    private ArrayList<MenuItem> listMenuItems;
+    private JSONArray arrayMenuItems;
 
+
+    // Method because data is not instantly returned
     public interface Callback {
-     //   void gotMenuItems(ArrayList<MenuItem> categories);
-        void gotMenuItems(ArrayList<MenuItem> MenuItems);
+        void gotMenuItems(ArrayList<MenuItem> categories);
         void gotMenuItemsError (String message);
     }
 
-    public MenuRequest (Context c, String category){
-
-        context =  c;
-        this.category = "?category=" + category;
+    public MenuRequest (Context cont){
+        context =  cont;
     }
 
-//    public void getMenuItems(Callback activity, String category) {
-//        RequestQueue queue = Volley.newRequestQueue(context);
-//
-//        String url = "https://resto.mprog.nl/menu?category=entrees"+category;
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, this, this);
-//        queue.add(jsonObjectRequest);
-//
-//        this.activity_menu = activity;
-//    }
-
-    public void getMenuItems(MenuRequest.Callback activity) {
+    // Method to retrieve categories from the API
+    public void getMenuItems(Callback activity, String category) {
         this.activity = activity;
+        String url = "https://resto.mprog.nl/menu?category="+category;
         RequestQueue queue = Volley.newRequestQueue(context);
-
-    //    String url = "https://resto.mprog.nl/menu" + category;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://resto.mprog.nl/menu" + category, null, this, this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(url, null, this, this);
         queue.add(jsonObjectRequest);
     }
 
-
+    // Method that is called when something goes wrong
     @Override
     public void onErrorResponse(VolleyError error) {
+        Log.d("onResponse", error.toString());
         activity.gotMenuItemsError(error.getMessage());
     }
 
+    // Method that is called when everything goes as expected
     @Override
     public void onResponse(JSONObject response) {
+        Log.d("onResponse",response.toString());
         try {
-            list_menuitems = new ArrayList<>();
-            array_menuitems = response.getJSONArray("items");
-            for (int i = 0; i < array_menuitems.length(); i++) {
-                JSONObject menuitem = array_menuitems.getJSONObject(i);
-                String name = menuitem.getString("name");
-                String description = menuitem.getString("description");
-                String image = menuitem.getString("image");
-                int price = menuitem.getInt("price");
-                String category = menuitem.getString("category");
-                MenuItem MenuItem = new MenuItem(name, description, image, price, category);
-                list_menuitems.add(MenuItem);
+            listMenuItems = new ArrayList<>();
+            arrayMenuItems = response.getJSONArray("items");
+            for (int i = 0; i < arrayMenuItems.length(); i++) {
+                JSONObject item = arrayMenuItems.getJSONObject(i);
+                String name = item.getString("name");
+                String description = item.getString("description");
+                String image = item.getString("image_url");
+                int price = item.getInt("price");
+                String category = item.getString("category");
+                MenuItem menuitem = new MenuItem(name, description, image, price, category);
+                listMenuItems.add(menuitem);
             }
-            activity.gotMenuItems(list_menuitems);
+            activity.gotMenuItems(listMenuItems);
         }
         catch (JSONException e) {
+            Log.d("onResponse", e.toString());
             e.printStackTrace();
         }
     }

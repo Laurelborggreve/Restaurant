@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.squareup.picasso.Picasso;
 
 public class MenuAdapter extends ArrayAdapter<MenuItem> {
-    private ArrayList<MenuItem> adapter_menuitems;
+    private ArrayList<MenuItem> listMenuItems;
 
     public MenuAdapter(Context context, int resource, ArrayList<MenuItem> objects) {
         super(context, resource, objects);
-        this.adapter_menuitems = objects;
+        listMenuItems = objects;
     }
 
     // Method to load the layout for each grid item
@@ -26,17 +27,17 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.adapter_menu, parent, false);
         }
 
-        // Get access to layout's views
-     //   MenuItem MenuItem = adapter_menuitems.get(position);
-        TextView view_menu_name = convertView.findViewById(R.id.view_menu_name);
-        view_menu_name.setText(adapter_menuitems.get(position).getName());
+        // Get access to layout's views: image, name, and price and of the dish
+        MenuItem MenuItem = listMenuItems.get(position);
 
-        TextView view_menu_price = convertView.findViewById(R.id.view_menu_price);
-     //   view_menu_price.setText("\u20ac" + Integer.toString(MenuItem.getPrice()));
-        view_menu_price.setText("€" + adapter_menuitems.get(position).getPrice());
+        ImageView viewMenuImage = convertView.findViewById(R.id.view_menu_image);
+        Picasso.get().load(MenuItem.getImageUrl()).into(viewMenuImage);
 
-        ImageView view_menu_image = convertView.findViewById(R.id.view_menu_image);
+        TextView viewMenuName = convertView.findViewById(R.id.view_menu_name);
+        viewMenuName.setText(MenuItem.getName());
 
+        TextView viewMenuPrice = convertView.findViewById(R.id.view_menu_price);
+        viewMenuPrice.setText("€" + MenuItem.getPrice());
 
         return convertView;
     }
